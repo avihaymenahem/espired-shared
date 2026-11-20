@@ -16,16 +16,27 @@ inside `onLogin`), sessions, CSRF protection and API tokens.
 The package is installed straight from git. `dist/` is committed, so there is no build step
 and no install scripts.
 
+Recommended spec, which works everywhere, including Docker images without `git` such as
+`node:24-alpine` and `node:24-*-slim`:
+
+```sh
+npm i https://codeload.github.com/avihaymenahem/espired-shared/tar.gz/refs/tags/v0.1.0
+pnpm add https://codeload.github.com/avihaymenahem/espired-shared/tar.gz/refs/tags/v0.1.0
+```
+
+The lockfile records the tarball URL and its integrity hash.
+
+The shorter `github:` spec also works, with one catch:
+
 ```sh
 npm i github:avihaymenahem/espired-shared#v0.1.0
 pnpm add github:avihaymenahem/espired-shared#v0.1.0
 ```
 
-In Docker images without `git` (e.g. `node:24-alpine`, `node:24-*-slim`), use the tag's tarball:
-
-```sh
-npm i https://codeload.github.com/avihaymenahem/espired-shared/tar.gz/refs/tags/v0.1.0
-```
+It needs `git` to resolve the tag. So run it on a machine that has git, and commit the
+lockfile. After that, `npm ci` and `pnpm install --frozen-lockfile` work in git-less images,
+because both lockfiles pin a GitHub tarball. A fresh `npm i` or `pnpm add` inside such an
+image fails with `spawn git ENOENT`.
 
 Requires Node.js 20.19 or newer. ESM only.
 
