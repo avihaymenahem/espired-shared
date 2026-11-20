@@ -1,0 +1,5 @@
+node_modules/
+*.log
+.env
+.env.*
+# dist/ is committed on purpose: consumers install straight from git with no build step.

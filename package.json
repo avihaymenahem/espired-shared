@@ -1,0 +1,78 @@
+{
+  "name": "@espired/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Small shared helpers for Espired apps: OIDC login (PKCE, state, nonce, sealed transaction cookie) for Express and Next.js.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avihaymenahem/espired-shared.git"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.19"
+  },
+  "exports": {
+    "./auth": {
+      "types": "./dist/auth/core.d.ts",
+      "default": "./dist/auth/core.js"
+    },
+    "./auth/express": {
+      "types": "./dist/auth/express.d.ts",
+      "default": "./dist/auth/express.js"
+    },
+    "./auth/next": {
+      "types": "./dist/auth/next.d.ts",
+      "default": "./dist/auth/next.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "auth": [
+        "dist/auth/core.d.ts"
+      ],
+      "auth/express": [
+        "dist/auth/express.d.ts"
+      ],
+      "auth/next": [
+        "dist/auth/next.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test \"test/**/*.test.ts\"",
+    "check:dist": "npm run build && git diff --exit-code -- dist"
+  },
+  "dependencies": {
+    "openid-client": "^6.9.1"
+  },
+  "peerDependencies": {
+    "@types/express": ">=4",
+    "express": ">=4"
+  },
+  "peerDependenciesMeta": {
+    "@types/express": {
+      "optional": true
+    },
+    "express": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.19.2",
+    "@types/oidc-provider": "^9.13.1",
+    "express": "^5.3.0",
+    "oidc-provider": "^9.15.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
